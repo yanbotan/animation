@@ -21,17 +21,17 @@ function App() {
             : LEFT * 2 + (GAP + WIDTH) * (idx - leftMostCard - 2),
     ),
   );
-  // const [opacityValues, setOpacityValues] = useState(() =>
-  //   Array.from({ length: CARDS.length }, (_, idx) =>
-  //     idx < leftMostCard
-  //       ? 0
-  //       : idx === leftMostCard
-  //         ? 0.3
-  //         : idx === leftMostCard + 1
-  //           ? 0.5
-  //           : 1,
-  //   ),
-  // );
+  const [opacityValues, setOpacityValues] = useState<number[]>(() =>
+    Array.from({ length: CARDS.length }, (_, idx) =>
+      idx < leftMostCard
+        ? 0
+        : idx === leftMostCard
+          ? 0.2
+          : idx === leftMostCard + 1
+            ? 0.4
+            : 1,
+    ),
+  );
 
   return (
     <>
@@ -41,7 +41,7 @@ function App() {
             className={cn("card", card)}
             style={{
               left: leftValues[idx],
-              // opacity: opacityValues[idx],
+              opacity: opacityValues[idx],
             }}
           >
             {Array.from({ length: 6 }, (_, idx) => (
@@ -68,6 +68,15 @@ function App() {
                     : prev[idx] - (GAP + WIDTH) / NUMBER_OF_FRAMES,
                 );
               });
+              setOpacityValues((prev) => {
+                return prev.map((_, idx) =>
+                  idx === prevLeftMostCard || idx === prevLeftMostCard + 1
+                    ? Math.max(0, prev[idx] - 0.2 / NUMBER_OF_FRAMES)
+                    : idx === prevLeftMostCard + 2
+                      ? prev[idx] - 0.6 / NUMBER_OF_FRAMES
+                      : prev[idx],
+                );
+              });
               if (count-- > 0) {
                 requestAnimationFrame(handler);
               }
@@ -79,8 +88,9 @@ function App() {
         </button>
         <button
           onClick={() => {
+            if (leftMostCard === 0) return;
             const prevLeftMostCard = leftMostCard;
-            setLeftMostCard((prev) => Math.max(0, prev - 1));
+            setLeftMostCard((prev) => prev - 1);
             let count = NUMBER_OF_FRAMES - 1;
             const handler = () => {
               setLeftValues((prev) => {
@@ -90,6 +100,15 @@ function App() {
                   idx === prevLeftMostCard + 1
                     ? prev[idx] + LEFT / NUMBER_OF_FRAMES
                     : prev[idx] + (GAP + WIDTH) / NUMBER_OF_FRAMES,
+                );
+              });
+              setOpacityValues((prev) => {
+                return prev.map((_, idx) =>
+                  idx === prevLeftMostCard - 1 || idx === prevLeftMostCard
+                    ? Math.min(1, prev[idx] + 0.2 / NUMBER_OF_FRAMES)
+                    : idx === prevLeftMostCard + 1
+                      ? prev[idx] + 0.6 / NUMBER_OF_FRAMES
+                      : prev[idx],
                 );
               });
               if (count-- > 0) {
