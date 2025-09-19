@@ -1,0 +1,49 @@
+#root {
+  padding: 20px;
+}
+
+.parent {
+  /* display: flex; */
+  position: relative;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+.card {
+  height: 100%;
+  width: 250px;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+
+  &.purple {
+    background-color: purple;
+    left: 0;
+  }
+
+  &.orangered {
+    background-color: orangered;
+    left: 30px;
+  }
+
+  &.teal {
+    background-color: teal;
+    left: 60px;
+  }
+
+  &.green {
+    background-color: green;
+    left: 90px;
+  }
+
+  &.olive {
+    background-color: olive;
+    left: 120px;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  column-gap: 8px;
+  justify-content: center;
+}
