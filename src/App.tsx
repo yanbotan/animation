@@ -2,7 +2,18 @@ import cn from "classnames";
 import "./App.scss";
 import { useState } from "react";
 
-const CARDS = ["one", "two", "three", "four", "five"];
+const CARDS = [
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+];
 const GAP = 20;
 const WIDTH = 250;
 const LEFT = 30;
@@ -11,7 +22,7 @@ const NUMBER_OF_FRAMES = 20;
 function App() {
   const [leftMostCard, setLeftMostCard] = useState(0);
   const [leftValues, setLeftValues] = useState(() =>
-    Array.from({ length: CARDS.length * 2 }, (_, idx) =>
+    Array.from({ length: CARDS.length }, (_, idx) =>
       idx === leftMostCard
         ? 0
         : idx === leftMostCard + 1
@@ -22,7 +33,7 @@ function App() {
     ),
   );
   const [opacityValues, setOpacityValues] = useState<number[]>(() =>
-    Array.from({ length: CARDS.length * 2 }, (_, idx) =>
+    Array.from({ length: CARDS.length }, (_, idx) =>
       idx < leftMostCard
         ? 0
         : idx === leftMostCard
@@ -36,7 +47,7 @@ function App() {
   return (
     <>
       <div className="parent">
-        {[...CARDS, ...CARDS].map((card, idx) => (
+        {CARDS.map((card, idx) => (
           <div
             key={idx}
             className={cn("card", card)}
