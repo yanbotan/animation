@@ -22,7 +22,7 @@ function App() {
     ),
   );
   const [opacityValues, setOpacityValues] = useState<number[]>(() =>
-    Array.from({ length: CARDS.length }, (_, idx) =>
+    Array.from({ length: CARDS.length * 2 }, (_, idx) =>
       idx < leftMostCard
         ? 0
         : idx === leftMostCard
@@ -38,6 +38,7 @@ function App() {
       <div className="parent">
         {[...CARDS, ...CARDS].map((card, idx) => (
           <div
+            key={idx}
             className={cn("card", card)}
             style={{
               left: leftValues[idx],
