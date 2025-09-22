@@ -52,7 +52,7 @@ function App() {
             key={idx}
             className={cn("card", card)}
             style={{
-              left: leftValues[idx],
+              transform: `translateX(${leftValues[idx]}px)`,
               opacity: opacityValues[idx],
             }}
           >
